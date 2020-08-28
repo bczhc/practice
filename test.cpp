@@ -13,7 +13,7 @@ int main() {
     C c;
     int size = sizeof(arr) / sizeof(arr[0]);
     printf("%i \n", size);
-    bczhc::sort::ShellSort::shellSort(arr, size, c);
+    bczhc::sort::MergeSort<int>::sort(arr, size, c);
     for (int i = 0; i < size; ++i)
         printf("%i ", arr[i]);
     putchar('\n');
