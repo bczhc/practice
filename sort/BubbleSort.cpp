@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 template <typename T>
-void bubbleSort(T arr[], int length, Comparable<T> &comparable) {
+void bubbleSort(T *arr, int length, Comparable<T> &comparable) {
     int temp;
     for (int j = length - 1; j > 0; --j) {
         for (int i = 0; i < j; ++i) {

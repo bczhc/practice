@@ -5,4 +5,5 @@ project(practice)
 add_executable(bubbleSort ./BubbleSort.cpp)
 add_executable(selectionSort ./SelectionSort.cpp)
 add_executable(insertionSort ./InsertionSort.cpp)
+add_executable(shellSort ./ShellSort.cpp)
 

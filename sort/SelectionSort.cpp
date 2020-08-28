@@ -2,11 +2,11 @@
 #include <stdio.h>
 
 template <typename T>
-void SelectionSort(T arr[], int length, Comparable<T> &comparable) {
+void SelectionSort(T *arr, int length, Comparable<T> &comparable) {
     for (int i = 0; i < length - 1; ++i) {
         int minIndex = i;
         for (int j = i + 1; j < length; ++j) {
-            if (arr[j] < arr[minIndex])
+            if (comparable.compare(arr[j], arr[minIndex]) < 0)
                 minIndex = j;
         }
         int temp = arr[i];
