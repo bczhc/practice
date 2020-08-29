@@ -2,15 +2,20 @@
 #include <cstdio>
 
 int main() {
-    bczhc::linearlist::SequentialList<const char *> list(2);
+    bczhc::linearlist::LinkedList<const char *> list;
     list.insert("ym");
     list.insert("kb");
     list.insert("md");
     list.insert(1, "zms");
-
-    int length = list.length();
-    for (int i = 0; i < length; ++i) {
-        printf("%s\n", list.get(i));
-    }
+    bczhc::linearlist::LinkedList<const char *>::Iterator it =
+        list.getIterator();
+    do {
+        printf("%s\n", it.value());
+    } while (it.next());
+    printf("-----------------\n");
+    printf("%s\n", list.get(1));
+    printf("%s\n", list.remove(0));
+    list.clear();
+    printf("%i\n", list.length());
     return 0;
 }
