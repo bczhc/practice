@@ -2,7 +2,7 @@
 #include <cstdio>
 
 int main() {
-    bczhc::linearlist::SequentialList<const char *> list(10);
+    bczhc::linearlist::SequentialList<const char *> list(2);
     list.insert("ym");
     list.insert("kb");
     list.insert("md");
