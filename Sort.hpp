@@ -128,5 +128,40 @@ private:
 template <typename T> T *MergeSort<T>::assist = nullptr;
 template <typename T> Comparable<T> *MergeSort<T>::comparable = nullptr;
 
+template <typename T> class QuickSort {
+public:
+    static Comparable<T> *comparable;
+    static void sort(T *arr, int length, Comparable<T> &comparable) {
+        QuickSort<T>::comparable = &comparable;
+        sort(arr, 0, length - 1);
+    }
+
+private:
+    static void sort(T *arr, int left, int right) {
+        if (left >= right)
+            return;
+        int pivotIndex = partition(arr, left, right);
+        sort(arr, left, pivotIndex - 1), sort(arr, pivotIndex + 1, right);
+    }
+    static int partition(T *arr, int left, int right) {
+        int pivot = arr[left];
+        int p = left, q = right + 1;
+        for (;;) {
+            while (comparable->compare(arr[--q], pivot) > 0 && q != left) {
+            }
+            while (comparable->compare(arr[++p], pivot) <= 0 && p != right) {
+            }
+            if (q <= p)
+                break;
+            else
+                swap(arr[p], arr[q]);
+        }
+        swap(arr[left], arr[q]);
+        return q;
+    }
+};
+
+template <typename T> Comparable<T> *QuickSort<T>::comparable = nullptr;
+
 } // namespace sort
 } // namespace bczhc
