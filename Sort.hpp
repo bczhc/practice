@@ -11,11 +11,10 @@ public:
     virtual int compare(T &a, T &b) = 0;
 };
 
-class BubbleSort {
+template <typename T> class BubbleSort {
 public:
-    template <typename T>
     static void sort(T *arr, int length, Comparable<T> &comparable) {
-        int temp;
+        T temp;
         for (int j = length - 1; j > 0; --j) {
             for (int i = 0; i < j; ++i) {
                 if (comparable.compare(arr[i], arr[i + 1]) > 0) {
@@ -28,10 +27,9 @@ public:
     }
 };
 
-class InsertionSort {
+template <typename T> class InsertionSort {
 private:
 public:
-    template <typename T>
     static void sort(T arr[], int length, Comparable<T> &comparable) {
         for (int i = 1; i < length; ++i) {
             for (int j = i; j > 0; --j) {
@@ -44,9 +42,8 @@ public:
     }
 };
 
-class SelectionSort {
+template <typename T> class SelectionSort {
 public:
-    template <typename T>
     static void sort(T *arr, int length, Comparable<T> &comparable) {
         for (int i = 0; i < length - 1; ++i) {
             int minIndex = i;
@@ -54,15 +51,15 @@ public:
                 if (comparable.compare(arr[j], arr[minIndex]) < 0)
                     minIndex = j;
             }
-            int temp = arr[i];
+            T temp = arr[i];
             arr[i] = arr[minIndex];
             arr[minIndex] = temp;
         }
     }
 };
-class ShellSort {
+
+template <typename T> class ShellSort {
 public:
-    template <typename T>
     static void sort(T *arr, int length, Comparable<T> &comparable) {
         int h = 1;
         while (h < length / 2)
@@ -144,7 +141,7 @@ private:
         sort(arr, left, pivotIndex - 1), sort(arr, pivotIndex + 1, right);
     }
     static int partition(T *arr, int left, int right) {
-        int pivot = arr[left];
+        T pivot = arr[left];
         int p = left, q = right + 1;
         for (;;) {
             while (comparable->compare(arr[--q], pivot) > 0 && q != left) {
