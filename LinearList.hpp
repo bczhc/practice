@@ -174,6 +174,25 @@ public:
         Iterator it(head);
         return it;
     }
+
+private:
+    Node *reverse(Node *node) {
+        if (node->next == nullptr) {
+            head->next = node;
+            return node;
+        }
+        Node *newHead = reverse(node->next);
+        newHead->next = node;
+        node->next = nullptr;
+        return node;
+    }
+
+public:
+    void reverse() {
+        if (isEmpty())
+            return;
+        reverse(head->next);
+    }
 };
 
 template <typename T> class DoublyLinkedList {
@@ -194,6 +213,7 @@ public:
         head = new Node();
         last = head;
     }
+    ~DoublyLinkedList() { delete head; }
 
     void clear() {
         len = 0;
@@ -260,9 +280,7 @@ public:
         }
     }
 
-    T getFirst() {
-        return head->next->data;
-    }
+    T getFirst() { return head->next->data; }
 
     T getLast() { return last->data; }
 
