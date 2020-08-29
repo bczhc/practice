@@ -92,13 +92,13 @@ private:
 
 public:
     LinkedList() { head = new Node(); }
+    ~LinkedList() { delete head; }
     void clear() {
         len = 0;
         Node *t = head;
-        while (t != nullptr) {
-            Node *next = t->next;
+        while (t->next != nullptr) {
+            t = t->next;
             delete t;
-            t = next;
         }
     }
 
@@ -176,6 +176,114 @@ public:
     }
 };
 
-class DoublyLinkedList {};
+template <typename T> class DoublyLinkedList {
+private:
+    class Node {
+    public:
+        T data;
+        Node *prev = nullptr;
+        Node *next = nullptr;
+        Node() {}
+    };
+
+    Node *head, *last;
+    int len = 0;
+
+public:
+    DoublyLinkedList() {
+        head = new Node();
+        last = head;
+    }
+
+    void clear() {
+        len = 0;
+        Node *t = head;
+        while (t->next != nullptr) {
+            t = t->next;
+            delete t;
+        }
+        head->next = nullptr;
+        last = head;
+    }
+
+    bool isEmpty() { return len == 0; }
+
+    int length() { return len; }
+
+    T get(int index) {
+        Node *t = head;
+        for (int i = 0; i <= index; ++i) {
+            t = t->next;
+        }
+        return t->data;
+    }
+
+    void insert(T a) {
+        Node *newNode = new Node();
+        newNode->prev = last, newNode->data = a;
+        last->next = newNode;
+        last = last->next;
+        ++len;
+    }
+
+    void insert(int index, T a) {
+        Node *prev = head;
+        for (int i = 0; i < index; ++i)
+            prev = prev->next;
+        Node *curr = prev->next;
+        Node *newNode = new Node;
+        newNode->prev = prev, newNode->data = a, newNode->next = curr;
+        curr->prev = newNode;
+        prev->next = newNode;
+        ++len;
+    }
+
+    T remove(int index) {
+        Node *prev = head;
+        for (int i = 0; i < index; ++i)
+            prev = prev->next;
+        Node *removedNode = prev->next;
+        T r = removedNode->data;
+        prev->next = removedNode->next;
+        removedNode->next->prev = prev;
+        delete removedNode;
+        --len;
+        return r;
+    }
+
+    int indexOf(T e) {
+        Node *t = head;
+        for (int i = 0; i < len; ++i) {
+            t = t->next;
+            if (e == t->data)
+                return i;
+        }
+    }
+
+    T getFirst() {
+        return head->next->data;
+    }
+
+    T getLast() { return last->data; }
+
+    class Iterator : public bczhc::Iterator<T> {
+    private:
+        Node *t;
+
+    public:
+        Iterator(Node *head) : t(head->next) {}
+        bool next() override {
+            t = t->next;
+            return t != nullptr;
+        }
+
+        T &value() override { return t->data; }
+    };
+
+    Iterator getIterator() {
+        Iterator it(head);
+        return it;
+    }
+};
 } // namespace linearlist
 } // namespace bczhc
