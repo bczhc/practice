@@ -1,36 +1,33 @@
 #include "LinearList.hpp"
 #include <cstdio>
+#include <stdint.h>
 
 using namespace bczhc::linearlist;
 using Node = LinkedList<int>::Node;
-Node *getLoopEntrance(bczhc::linearlist::LinkedList<int>::Node *first) {
-    Node *slow = first, *fast = slow;
-    while (fast != nullptr && fast->next != nullptr) {
-        slow = slow->next, fast = fast->next->next;
-        if (slow == fast) {
-            Node *temp = first;
-            while (temp != slow)
-                slow = slow->next, temp = temp->next;
-            return temp;
-        }
-    }
-    return nullptr;
-}
 
 int main() {
-    bczhc::linearlist::LinkedList<int>::Node n1(1, nullptr);
-    bczhc::linearlist::LinkedList<int>::Node n2(2, nullptr);
-    bczhc::linearlist::LinkedList<int>::Node n3(3, nullptr);
-    bczhc::linearlist::LinkedList<int>::Node n4(4, nullptr);
-    bczhc::linearlist::LinkedList<int>::Node n5(5, nullptr);
-    bczhc::linearlist::LinkedList<int>::Node n6(6, nullptr);
-    n1.next = &n2;
-    n2.next = &n3;
-    n3.next = &n4;
-    n4.next = &n5;
-    n5.next = &n6;
-    n6.next = &n3;
-    LinkedList<int>::Node *first = &n1;
-    Node *r = getLoopEntrance(first);
-    printf("%i\n", r->data);
+    Node *first = new Node(1, nullptr);
+    Node *tail = first;
+    for (int i = 2; i <= 41; ++i) {
+        tail->next = new Node(i, nullptr);
+        tail = tail->next;
+    }
+    tail->next = first;
+    int16_t count = 0;
+    Node *prev = nullptr;
+    tail = first;
+    while (tail->next != tail) {
+        ++count;
+        if (count == 3) {
+            printf("%i ", tail->data);
+            delete prev->next;
+            prev->next = tail->next;
+            count = 0;
+        } else {
+            prev = tail;
+        }
+        tail = tail->next;
+    }
+    printf("%i\n", tail->data);
+    return 0;
 }
