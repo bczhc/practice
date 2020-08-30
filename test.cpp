@@ -2,32 +2,23 @@
 #include <cstdio>
 #include <stdint.h>
 
-using namespace bczhc::linearlist;
-using Node = LinkedList<int>::Node;
-
 int main() {
-    Node *first = new Node(1, nullptr);
-    Node *tail = first;
-    for (int i = 2; i <= 41; ++i) {
-        tail->next = new Node(i, nullptr);
-        tail = tail->next;
+    using Stack = bczhc::linearlist::Stack<const char *>;
+    Stack stack;
+    stack.push("a");
+    stack.push("b");
+    stack.push("c");
+    stack.push("d");
+    Stack::Iterator it = stack.getIterator();
+    if (it.moveToFirst()) {
+        do {
+            printf("%s\n", it.get());
+        } while (it.next());
     }
-    tail->next = first;
-    int16_t count = 0;
-    Node *prev = nullptr;
-    tail = first;
-    while (tail->next != tail) {
-        ++count;
-        if (count == 3) {
-            printf("%i ", tail->data);
-            delete prev->next;
-            prev->next = tail->next;
-            count = 0;
-        } else {
-            prev = tail;
-        }
-        tail = tail->next;
-    }
-    printf("%i\n", tail->data);
+    if (stack.size() == 0)
+        return 0;
+    printf("--------------\n");
+    printf("%s\n", stack.pop());
+    printf("%i\n", stack.size());
     return 0;
 }

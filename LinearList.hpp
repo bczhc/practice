@@ -1,12 +1,13 @@
 #include "Sort.hpp"
-#include <cstddef>
 
 namespace bczhc {
 template <typename T> class Iterator {
 public:
+    virtual bool moveToFirst() = 0;
     virtual bool next() = 0;
-    virtual T &value() = 0;
+    virtual T &get() = 0;
 };
+
 namespace linearlist {
 template <typename T> class SequentialList {
 private:
@@ -163,13 +164,23 @@ public:
         Node *t;
 
     public:
-        Iterator(Node *head) : t(head->next) {}
+        Iterator(Node *head) : t(head) {}
+
+        bool moveToFirst() override {
+            if (t->next == nullptr)
+                return false;
+            else {
+                t = t->next;
+                return true;
+            }
+        }
+
         bool next() override {
             t = t->next;
             return t != nullptr;
         }
 
-        T &value() override { return t->data; }
+        T &get() override { return t->data; }
     };
 
     Iterator getIterator() {
@@ -297,13 +308,23 @@ public:
         Node *t;
 
     public:
-        Iterator(Node *head) : t(head->next) {}
+        Iterator(Node *head) : t(head) {}
+
+        bool moveToFirst() override {
+            if (t->next == nullptr)
+                return false;
+            else {
+                t = t->next;
+                return true;
+            }
+        }
+
         bool next() override {
             t = t->next;
             return t != nullptr;
         }
 
-        T &value() override { return t->data; }
+        T &get() override { return t->data; }
     };
 
     Iterator getIterator() {
@@ -311,5 +332,74 @@ public:
         return it;
     }
 };
+
+template <typename T> class Stack {
+private:
+    using Node = typename LinkedList<T>::Node;
+    Node *head = nullptr;
+    int len = 0;
+
+public:
+    Stack() { head = new Node(); }
+
+    ~Stack() { delete head; }
+
+    void clear() {
+        len = 0;
+        Node *t = head;
+        while (t->next != nullptr) {
+            t = t->next;
+            delete t;
+        }
+        head->next = nullptr;
+    }
+    bool isEmpty() { return len == 0; }
+
+    int size() { return len; }
+
+    T pop() {
+        Node *first = head->next;
+        return first->data;
+        head->next = first->next;
+        delete first;
+        --len;
+    }
+
+    void push(T a) {
+        Node *newNode = new Node(a, head->next);
+        head->next = newNode;
+        ++len;
+    }
+
+    class Iterator : public bczhc::Iterator<T> {
+    private:
+        Node *t;
+
+    public:
+        Iterator(Node *head) : t(head) {}
+
+        bool moveToFirst() override {
+            if (t->next == nullptr)
+                return false;
+            else {
+                t = t->next;
+                return true;
+            }
+        }
+
+        bool next() override {
+            t = t->next;
+            return t != nullptr;
+        }
+
+        T &get() override { return t->data; }
+    };
+
+    Iterator getIterator() {
+        Iterator it(head);
+        return it;
+    }
+};
+
 } // namespace linearlist
 } // namespace bczhc
