@@ -1,4 +1,5 @@
 #include "Sort.hpp"
+#include <cstddef>
 
 namespace bczhc {
 template <typename T> class Iterator {
@@ -77,7 +78,7 @@ private:
 };
 
 template <typename T> class LinkedList {
-private:
+public:
     class Node {
     public:
         T data;
@@ -87,6 +88,7 @@ private:
         Node() {}
     };
 
+private:
     Node *head;
     int len = 0;
 
@@ -191,6 +193,13 @@ public:
         if (isEmpty())
             return;
         reverse(head->next)->next = nullptr;
+    }
+
+    T getMid() {
+        Node *slow = head->next, *fast = slow;
+        while (fast != nullptr && fast->next != nullptr)
+            slow = slow->next, fast = fast->next->next;
+        return slow->data;
     }
 };
 
