@@ -359,10 +359,11 @@ public:
 
     T pop() {
         Node *first = head->next;
-        return first->data;
+        T r = first->data;
         head->next = first->next;
         delete first;
         --len;
+        return r;
     }
 
     void push(T a) {

@@ -2,23 +2,25 @@
 #include <cstdio>
 #include <stdint.h>
 
-int main() {
-    using Stack = bczhc::linearlist::Stack<const char *>;
+using Stack = bczhc::linearlist::Stack<char>;
+
+bool isValid(const char *s) {
     Stack stack;
-    stack.push("a");
-    stack.push("b");
-    stack.push("c");
-    stack.push("d");
-    Stack::Iterator it = stack.getIterator();
-    if (it.moveToFirst()) {
-        do {
-            printf("%s\n", it.get());
-        } while (it.next());
+    for (int i = 0; s[i] != '\0'; ++i) {
+        if (s[i] == '(')
+            stack.push(s[i]);
+        else if (s[i] == ')') {
+            if (stack.size() == 0)
+                return false;
+            if (stack.pop() != '(')
+                return false;
+        }
     }
-    if (stack.size() == 0)
-        return 0;
-    printf("--------------\n");
-    printf("%s\n", stack.pop());
-    printf("%i\n", stack.size());
+    return stack.size() == 0;
+}
+
+int main(int argc, char **argv) {
+    const char *s = argv[1];
+    printf("%i\n", isValid(s));
     return 0;
 }
