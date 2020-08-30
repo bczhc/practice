@@ -3,14 +3,18 @@
 
 using namespace bczhc::linearlist;
 using Node = LinkedList<int>::Node;
-bool hasLoop(bczhc::linearlist::LinkedList<int>::Node *first) {
+Node *getLoopEntrance(bczhc::linearlist::LinkedList<int>::Node *first) {
     Node *slow = first, *fast = slow;
     while (fast != nullptr && fast->next != nullptr) {
         slow = slow->next, fast = fast->next->next;
-        if (slow == fast)
-            return true;
+        if (slow == fast) {
+            Node *temp = first;
+            while (temp != slow)
+                slow = slow->next, temp = temp->next;
+            return temp;
+        }
     }
-    return false;
+    return nullptr;
 }
 
 int main() {
@@ -27,6 +31,6 @@ int main() {
     n5.next = &n6;
     n6.next = &n3;
     LinkedList<int>::Node *first = &n1;
-    bool r = hasLoop(first);
-    printf("%s\n", r ? "true" : "false");
+    Node *r = getLoopEntrance(first);
+    printf("%i\n", r->data);
 }
