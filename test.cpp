@@ -1,26 +1,48 @@
 #include "LinearList.hpp"
+#include <cstdint>
 #include <cstdio>
-#include <stdint.h>
+#include <stdlib.h>
 
-using Stack = bczhc::linearlist::Stack<char>;
+using Stack = bczhc::linearlist::Stack<int>;
 
-bool isValid(const char *s) {
+int evaluate(char **ss, int length) {
     Stack stack;
-    for (int i = 0; s[i] != '\0'; ++i) {
-        if (s[i] == '(')
-            stack.push(s[i]);
-        else if (s[i] == ')') {
-            if (stack.size() == 0)
-                return false;
-            if (stack.pop() != '(')
-                return false;
+    char *s;
+    int o1, o2;
+    for (int i = 0; i < length; ++i) {
+        s = ss[i];
+        switch (s[0]) {
+        case '+':
+            o1 = stack.pop();
+            o2 = stack.pop();
+            stack.push(o1 + o2);
+            break;
+        case '-':
+            o1 = stack.pop();
+            o2 = stack.pop();
+            stack.push(o2 - o1);
+            break;
+        case '*':
+            o1 = stack.pop();
+            o2 = stack.pop();
+            stack.push(o1 * o2);
+            break;
+        case '/':
+            o1 = stack.pop();
+            o2 = stack.pop();
+            stack.push(o2 / o1);
+            break;
+        default:
+            stack.push(atoi(s));
+            break;
         }
     }
-    return stack.size() == 0;
+    return stack.pop();
 }
 
 int main(int argc, char **argv) {
     const char *s = argv[1];
-    printf("%i\n", isValid(s));
+    int r = evaluate(argv + 1, argc - 1);
+    printf("%i\n", r);
     return 0;
 }
