@@ -1,10 +1,11 @@
+#include "Sort.hpp"
 #include <cstdio>
 #include <sys/types.h>
 
 namespace bczhc {
 namespace symboltable {
 template <typename K, typename V> class SymbolTable {
-private:
+public:
     class Node {
     public:
         K key;
@@ -70,6 +71,31 @@ public:
     }
 
     int size() { return len; }
+};
+
+template <typename K, typename V>
+class OrderedSymbolTable : public SymbolTable<K, V> {
+private:
+    sort::Comparable<K> &comparable;
+    using Node = typename SymbolTable<K, V>::Node;
+
+public:
+    OrderedSymbolTable(sort::Comparable<K> &comparable)
+        : comparable(comparable) {}
+    void put(K key, V value) {
+        Node *curr = this->head->next, *prev = this->head;
+        while (curr != nullptr && comparable.compare(key, curr->key) < 0) {
+            prev = curr;
+            curr = curr->next;
+        }
+        if (curr != nullptr && curr->key == key) {
+            curr->value = value;
+        }
+        Node *newNode = new Node(key, value);
+        newNode->next = curr;
+        prev->next = newNode;
+        ++this->len;
+    }
 };
 } // namespace symboltable
 } // namespace bczhc
