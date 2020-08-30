@@ -181,9 +181,8 @@ private:
             head->next = node;
             return node;
         }
-        Node *newHead = reverse(node->next);
-        newHead->next = node;
-        node->next = nullptr;
+        Node *prev = reverse(node->next);
+        prev->next = node;
         return node;
     }
 
@@ -191,7 +190,7 @@ public:
     void reverse() {
         if (isEmpty())
             return;
-        reverse(head->next);
+        reverse(head->next)->next = nullptr;
     }
 };
 
