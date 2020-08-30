@@ -402,5 +402,67 @@ public:
     }
 };
 
+template <typename T> class Queue {
+private:
+    using Node = typename LinkedList<T>::Node;
+    Node *head = nullptr, *last = nullptr;
+    int len = 0;
+
+public:
+    Queue() {
+        head = new Node;
+        last = head;
+    }
+
+    ~Queue() { delete head; }
+    bool isEmpty() { return len == 0; }
+
+    int size() { return len; }
+
+    T dequeue() {
+        Node *first = head->next;
+        head->next = first->next;
+        T r = first->data;
+        delete first;
+        --len;
+        return r;
+    }
+
+    void enqueue(T a) {
+        last->next = new Node(a, nullptr);
+        last = last->next;
+        ++len;
+    }
+
+    class Iterator : public bczhc::Iterator<T> {
+    private:
+        Node *t = nullptr;
+
+    public:
+        Iterator(Node *head) : t(head) {}
+
+        bool moveToFirst() override {
+            if (t->next == nullptr)
+                return false;
+            else {
+                t = t->next;
+                return true;
+            }
+        }
+
+        bool next() override {
+            t = t->next;
+            return t != nullptr;
+        }
+
+        T &get() override { return t->data; }
+    };
+
+    Iterator getIterator() {
+        Iterator it(head);
+        return it;
+    }
+};
+
 } // namespace linearlist
 } // namespace bczhc
