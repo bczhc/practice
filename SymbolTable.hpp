@@ -1,3 +1,7 @@
+#ifndef BCZHC_SYMBOL_TABLE_H
+#define BCZHC_SYMBOL_TABLE_H
+
+#include "Result.hpp"
 #include "Sort.hpp"
 #include <cstdio>
 #include <sys/types.h>
@@ -18,13 +22,7 @@ public:
     int len = 0;
 
 public:
-    class Result {
-    public:
-        V val;
-        bool found = true;
-        Result(V v) : val(v) {}
-        Result() {}
-    };
+    using Result = Result<V>;
     SymbolTable() { head = new Node; }
 
     ~SymbolTable() { delete head; }
@@ -99,3 +97,5 @@ public:
 };
 } // namespace symboltable
 } // namespace bczhc
+
+#endif // BCZHC_SYMBOL_TABLE_H

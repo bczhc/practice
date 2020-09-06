@@ -1,3 +1,6 @@
+#ifndef BCZHC_LINEAR_LIST_H
+#define BCZHC_LINEAR_LIST_H
+
 #include "Sort.hpp"
 
 namespace bczhc {
@@ -466,3 +469,5 @@ public:
 
 } // namespace linearlist
 } // namespace bczhc
+
+#endif //BCZHC_LINEAR_LIST_H

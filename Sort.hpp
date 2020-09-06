@@ -1,4 +1,6 @@
-#include <stdc-predef.h>
+#ifndef BCZHC_SORT_H
+#define BCZHC_SORT_H
+
 namespace bczhc {
 template <typename T> static void swap(T &a, T &b) {
     T temp = a;
@@ -162,3 +164,5 @@ template <typename T> Comparable<T> *QuickSort<T>::comparable = nullptr;
 
 } // namespace sort
 } // namespace bczhc
+
+#endif //BCZHC_SORT_H
