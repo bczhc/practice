@@ -284,11 +284,16 @@ public:
         Node *prev = head;
         for (int i = 0; i < index; ++i)
             prev = prev->next;
-        Node *removedNode = prev->next;
-        T r = removedNode->data;
-        prev->next = removedNode->next;
-        removedNode->next->prev = prev;
-        delete removedNode;
+        Node *curr = prev->next;
+        T r = curr->data;
+        Node *next = curr->next;
+        if (next == nullptr) {
+            last = curr;
+        } else {
+            prev->next = next;
+            next->prev = prev;
+        }
+        delete curr;
         --len;
         return r;
     }
@@ -473,4 +478,4 @@ public:
 } // namespace linearlist
 } // namespace bczhc
 
-#endif //BCZHC_LINEAR_LIST_H
+#endif // BCZHC_LINEAR_LIST_H

@@ -1,17 +1,16 @@
+#include "LinearList.hpp"
 #include "Tree.hpp"
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <stdlib.h>
-#include "LinearList.hpp"
 
 using namespace bczhc::linearlist;
 
 int main(int argc, char **argv) {
-    Queue<int> q;
-    q.enqueue(0);
-    printf("%i\n", q.dequeue());
-    q.enqueue(1);
-    printf("%i\n", q.dequeue());
+    DoublyLinkedList<int> l;
+    l.insert(0);
+    l.insert(1);
+    printf("%i\n", l.remove(l.length() - 1));
     return 0;
 }
