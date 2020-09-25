@@ -424,6 +424,9 @@ public:
 
     T dequeue() {
         Node *first = head->next;
+        if (first->next == nullptr) {
+            last = head;
+        }
         head->next = first->next;
         T r = first->data;
         delete first;
