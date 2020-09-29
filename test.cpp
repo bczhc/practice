@@ -5,12 +5,16 @@
 #include <cstdlib>
 #include <stdlib.h>
 
+#include <iostream>
+using namespace std;
+
 using namespace bczhc::linearlist;
 
 int main(int argc, char **argv) {
-    DoublyLinkedList<int> l;
-    l.insert(0);
-    l.insert(1);
-    printf("%i\n", l.remove(l.length() - 1));
+    SequentialList<string> list;
+    for (int i = 0; i < 3; ++i) {
+        string s = "a";
+        list.insert(s);
+    }
     return 0;
 }

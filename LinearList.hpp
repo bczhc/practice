@@ -27,7 +27,7 @@ public:
         elementsLength = 1;
     }
 
-    ~SequentialList() { delete elements; }
+    ~SequentialList() { delete[] elements; }
 
     void clear() { len = 0; }
 
@@ -75,7 +75,7 @@ private:
         T *newArr = new T[newSize];
         for (int i = 0; i < len; ++i)
             newArr[i] = elements[i];
-        delete elements;
+        delete[] elements;
         elements = newArr;
         elementsLength = newSize;
     }
