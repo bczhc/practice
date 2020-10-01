@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include <iostream>
+
 using namespace std;
 
 using namespace bczhc::linearlist;
