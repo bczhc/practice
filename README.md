@@ -1,0 +1,2 @@
+# practice
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4d21276021fe45dab07bf2b0a4113e08)](https://app.codacy.com/gh/bczhc/practice?utm_source=github.com&utm_medium=referral&utm_content=bczhc/practice&utm_campaign=Badge_Grade)
