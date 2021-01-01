@@ -107,14 +107,18 @@ namespace bczhc {
         public:
             LinkedList() { head = new Node(); }
 
-            ~LinkedList() { delete head; }
+            ~LinkedList() {
+                clear();
+                delete head;
+            }
 
             void clear() {
                 len = 0;
-                Node *t = head;
-                while (t->next != nullptr) {
+                Node *t = head->next, *prev = t;
+                while (t != nullptr) {
+                    prev = t;
                     t = t->next;
-                    delete t;
+                    delete prev;
                 }
             }
 
@@ -248,14 +252,18 @@ namespace bczhc {
                 last = head;
             }
 
-            ~DoublyLinkedList() { delete head; }
+            ~DoublyLinkedList() {
+                clear();
+                delete head;
+            }
 
             void clear() {
                 len = 0;
-                Node *t = head;
-                while (t->next != nullptr) {
+                Node *t = head->next, *prev = t;
+                while (t != nullptr) {
+                    prev = t;
                     t = t->next;
-                    delete t;
+                    delete prev;
                 }
                 head->next = nullptr;
                 last = head;
@@ -364,16 +372,19 @@ namespace bczhc {
         public:
             Stack() { head = new Node(); }
 
-            ~Stack() { delete head; }
+            ~Stack() {
+                clear();
+                delete head;
+            }
 
             void clear() {
                 len = 0;
-                Node *t = head;
-                while (t->next != nullptr) {
+                Node *t = head->next, *prev = t;
+                while (t != nullptr) {
+                    prev = t;
                     t = t->next;
-                    delete t;
+                    delete prev;
                 }
-                head->next = nullptr;
             }
 
             bool isEmpty() { return len == 0; }
@@ -438,7 +449,20 @@ namespace bczhc {
                 last = head;
             }
 
-            ~Queue() { delete head; }
+            ~Queue() {
+                clear();
+                delete head;
+            }
+
+            void clear() {
+                len = 0;
+                Node *t = head->next, *prev = t;
+                while (t != nullptr) {
+                    prev = t;
+                    t = t->next;
+                    delete prev;
+                }
+            }
 
             bool isEmpty() { return len == 0; }
 
@@ -492,7 +516,7 @@ namespace bczhc {
             }
         };
 
-    } // namespace linearlist
-} // namespace bczhc
+    }// namespace linearlist
+}// namespace bczhc
 
-#endif // BCZHC_LINEAR_LIST_H
+#endif// BCZHC_LINEAR_LIST_H
