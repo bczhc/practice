@@ -29,7 +29,7 @@ namespace bczhc {
             }
 
             SequentialList() {
-                data = data = new T[1];
+                data = new T[1];
                 dataSize = 1;
             }
 
@@ -53,10 +53,13 @@ namespace bczhc {
             }
 
             void insert(int index, const T *a, int size) {
-                if (len == dataSize)
-                    resize(dataSize * 2 + size);
+                if (index < 0 || index > len) return;
+                int t;
+                if (len + size >= dataSize)
+                    resize(dataSize * 2 + len + size);
                 for (int i = len - 1 + size; i > index; --i) {
-                    data[i] = data[i - size];
+                    t = i - size;
+                    if (t >= 0) data[i] = data[t];
                 }
                 for (int i = index; i < index + size; ++i) {
                     data[i] = a[i - index];
@@ -86,8 +89,10 @@ namespace bczhc {
              * @param end 
              */
             void remove(int start, int end) {
-                for (int i = end; i < len; ++i) {
-                    data[start + end - i] = data[i];
+                if (start < 0 || start >= len || end > len || end < start) return;
+                int numMoved = len - end;
+                for (int i = end; i < end + numMoved; ++i) {
+                    data[i] = data[start + i - end];
                 }
                 len -= end - start;
                 if (len < dataSize / 4) resize(dataSize / 2);
