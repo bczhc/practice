@@ -25,12 +25,12 @@ namespace bczhc {
 
             SequentialList(int capacity) {
                 data = new T[capacity];
-                elementsLength = capacity;
+                dataSize = capacity;
             }
 
             SequentialList() {
                 data = data = new T[1];
-                elementsLength = 1;
+                dataSize = 1;
             }
 
             ~SequentialList() { delete[] data; }
@@ -44,28 +44,53 @@ namespace bczhc {
             T get(int i) { return data[i]; }
 
             void insert(int index, T a) {
-                if (len == elementsLength)
-                    resize(elementsLength * 2 + 2);
+                if (len == dataSize)
+                    resize(dataSize * 2 + 2);
                 for (int i = len; i > index; --i)
                     data[i] = data[i - 1];
                 data[index] = a;
                 ++len;
             }
 
+            void insert(int index, const T *a, int size) {
+                if (len == dataSize)
+                    resize(dataSize * 2 + size);
+                for (int i = len - 1 + size; i > index; --i) {
+                    data[i] = data[i - size];
+                }
+                for (int i = index; i < index + size; ++i) {
+                    data[i] = a[i - index];
+                }
+                len += size;
+            }
+
             void insert(T a) {
-                if (len == elementsLength)
-                    resize(elementsLength * 2 + 2);
+                if (len == dataSize)
+                    resize(dataSize * 2 + 2);
                 data[len++] = a;
             }
 
             T remove(int index) {
-                if (len < elementsLength / 4)
-                    resize(elementsLength / 2);
+                if (len < dataSize / 4)
+                    resize(dataSize / 2);
                 T removed = data[index];
                 --len;
                 for (int i = index; i < len; ++i)
                     data[i] = data[i + 1];
                 return removed;
+            }
+
+            /**
+             * Remove range: [start, end)
+             * @param start 
+             * @param end 
+             */
+            void remove(int start, int end) {
+                for (int i = end; i < len; ++i) {
+                    data[start + end - i] = data[i];
+                }
+                len -= end - start;
+                if (len < dataSize / 4) resize(dataSize / 2);
             }
 
             int indexOf(T t) {
@@ -75,8 +100,12 @@ namespace bczhc {
                 }
             }
 
+            T &operator[](int i) {
+                return data[i];
+            }
+
         private:
-            int elementsLength = 0;
+            int dataSize = 0;
 
             void resize(int newSize) {
                 T *newArr = new T[newSize];
@@ -84,7 +113,7 @@ namespace bczhc {
                     newArr[i] = data[i];
                 delete[] data;
                 data = newArr;
-                elementsLength = newSize;
+                dataSize = newSize;
             }
         };
 
