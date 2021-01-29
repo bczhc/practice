@@ -7,11 +7,9 @@ namespace bczhc {
     template<typename T>
     class Iterator {
     public:
-        virtual bool moveToFirst() = 0;
+        virtual bool hasNext() = 0;
 
-        virtual bool next() = 0;
-
-        virtual T get() = 0;
+        virtual T next() = 0;
     };
 
     namespace linearlist {
@@ -132,7 +130,7 @@ namespace bczhc {
 
                 Node(T data, Node *next) : data(data), next(next) {}
 
-                Node() {}
+                Node() = default;
             };
 
         private:
@@ -149,7 +147,7 @@ namespace bczhc {
 
             void clear() {
                 len = 0;
-                Node *t = head->next, *prev = t;
+                Node *t = head->next, *prev;
                 while (t != nullptr) {
                     prev = t;
                     t = t->next;
@@ -216,23 +214,16 @@ namespace bczhc {
                 Node *t;
 
             public:
-                Iterator(Node *head) : t(head) {}
+                explicit Iterator(Node *head) : t(head) {}
 
-                bool moveToFirst() override {
-                    if (t->next == nullptr)
-                        return false;
-                    else {
-                        t = t->next;
-                        return true;
-                    }
+                bool hasNext() override {
+                    return t->next != nullptr;
                 }
 
-                bool next() override {
+                T next() override {
                     t = t->next;
-                    return t != nullptr;
+                    return t->data;
                 }
-
-                T get() override { return t->data; }
             };
 
             Iterator getIterator() {
@@ -372,23 +363,16 @@ namespace bczhc {
                 Node *t;
 
             public:
-                Iterator(Node *head) : t(head) {}
+                explicit Iterator(Node *head) : t(head) {}
 
-                bool moveToFirst() override {
-                    if (t->next == nullptr)
-                        return false;
-                    else {
-                        t = t->next;
-                        return true;
-                    }
+                bool hasNext() override {
+                    return t->next != nullptr;
                 }
 
-                bool next() override {
+                T next() override {
                     t = t->next;
-                    return t != nullptr;
+                    return t->data;
                 }
-
-                T get() override { return t->data; }
             };
 
             Iterator getIterator() {
@@ -446,23 +430,16 @@ namespace bczhc {
                 Node *t;
 
             public:
-                Iterator(Node *head) : t(head) {}
+                explicit Iterator(Node *head) : t(head) {}
 
-                bool moveToFirst() override {
-                    if (t->next == nullptr)
-                        return false;
-                    else {
-                        t = t->next;
-                        return true;
-                    }
+                bool hasNext() override {
+                    return t->next != nullptr;
                 }
 
-                bool next() override {
+                T next() override {
                     t = t->next;
-                    return t != nullptr;
+                    return t->data;
                 }
-
-                T get() override { return t->data; }
             };
 
             Iterator getIterator() {
@@ -526,23 +503,16 @@ namespace bczhc {
                 Node *t = nullptr;
 
             public:
-                Iterator(Node *head) : t(head) {}
+                explicit Iterator(Node *head) : t(head) {}
 
-                bool moveToFirst() override {
-                    if (t->next == nullptr)
-                        return false;
-                    else {
-                        t = t->next;
-                        return true;
-                    }
+                bool hasNext() override {
+                    return t->next != nullptr;
                 }
 
-                bool next() override {
+                T next() override {
                     t = t->next;
-                    return t != nullptr;
+                    return t->data;
                 }
-
-                T get() override { return t->data; }
             };
 
             Iterator getIterator() {
