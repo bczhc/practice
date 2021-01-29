@@ -65,10 +65,11 @@ namespace bczhc {
                 len += size;
             }
 
-            void insert(T a) {
+            SequentialList<T> &insert(T a) {
                 if (len == dataSize)
                     resize(dataSize * 2 + 2);
                 data[len++] = a;
+                return *this;
             }
 
             T remove(int index) {
