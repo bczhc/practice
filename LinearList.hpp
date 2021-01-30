@@ -89,12 +89,13 @@ namespace bczhc {
              */
             void remove(int start, int end) {
                 if (start < 0 || start >= len || end > len || end < start) return;
-                int numMoved = len - end;
-                for (int i = end; i < end + numMoved; ++i) {
-                    data[i] = data[start + i - end];
+                int removedSize = end - start;
+                int t = len - removedSize;
+                for (int i = start; i < t; ++i) {
+                    data[i] = data[i + removedSize];
                 }
-                len -= end - start;
                 if (len < dataSize / 4) resize(dataSize / 2);
+                len -= removedSize;
             }
 
             int indexOf(T t) {
