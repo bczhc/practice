@@ -23,7 +23,15 @@ namespace bczhc {
         int len = 0;
 
     public:
-        using Result = Result<V>;
+        class Result {
+        public:
+            V val;
+            bool found = true;
+
+            explicit Result(V v) : val(v) {}
+
+            Result() = default;
+        };
 
         explicit BinarySearchTree(Comparable<K> &comparable)
                 : comparable(&comparable) {}

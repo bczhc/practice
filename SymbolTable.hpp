@@ -1,7 +1,6 @@
 #ifndef BCZHC_SYMBOL_TABLE_H
 #define BCZHC_SYMBOL_TABLE_H
 
-#include "Result.hpp"
 #include "Sort.hpp"
 #include <cstdio>
 #include "LinearList.hpp"
@@ -25,7 +24,16 @@ namespace bczhc {
         int len = 0;
 
     public:
-        using Result = Result<V>;
+
+        class Result {
+        public:
+            V val;
+            bool found = true;
+
+            explicit Result(V v) : val(v) {}
+
+            Result() = default;
+        };
 
         SymbolTable() { head = new Node; }
 
