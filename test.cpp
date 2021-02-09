@@ -3,13 +3,13 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <iostream>
 
 using namespace std;
 
-using namespace bczhc::linearlist;
+using namespace bczhc;
 
 int main(int argc, char **argv) {
     SequentialList<string> list;

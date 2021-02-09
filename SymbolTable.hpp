@@ -6,7 +6,7 @@
 #include <cstdio>
 #include "LinearList.hpp"
 
-namespace bczhc::symboltable {
+namespace bczhc {
     template<typename K, typename V>
     class SymbolTable {
     public:
@@ -25,7 +25,7 @@ namespace bczhc::symboltable {
         int len = 0;
 
     public:
-        using Result = bczhc::Result<V>;
+        using Result = Result<V>;
 
         SymbolTable() { head = new Node; }
 
@@ -119,11 +119,11 @@ namespace bczhc::symboltable {
     template<typename K, typename V>
     class OrderedSymbolTable : public SymbolTable<K, V> {
     private:
-        sort::Comparable<K> &comparable;
+        Comparable<K> &comparable;
         using Node = typename SymbolTable<K, V>::Node;
 
     public:
-        explicit OrderedSymbolTable(sort::Comparable<K> &comparable)
+        explicit OrderedSymbolTable(Comparable<K> &comparable)
                 : comparable(comparable) {}
 
         void put(K key, V value) {

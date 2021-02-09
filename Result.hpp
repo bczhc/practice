@@ -7,9 +7,9 @@ namespace bczhc {
         T val;
         bool found = true;
 
-        Result(T v) : val(v) {}
+        explicit Result(T v) : val(v) {}
 
-        Result() {}
+        Result() = default;
     };
 } // namespace bczhc
 #endif // BCZHC_RESULT_H
